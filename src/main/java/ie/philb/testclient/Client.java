@@ -24,6 +24,7 @@ public class Client {
     public static void main(String[] args) throws Exception {
 
         // System.setProperty("javax.net.debug", "all");
+
         TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
                 @Override
@@ -43,28 +44,13 @@ public class Client {
             }
         };
 
-//        String keyStoreFileName = "C:\\Users\\philb\\Documents\\NetBeansProjects\\TestClient\\testcert_pub.jks";
-//        char[] keyStorePassword = "password".toCharArray();
-//
-//        KeyStore ks = KeyStore.getInstance("JKS");
-//        ks.load(new FileInputStream(keyStoreFileName), keyStorePassword);
-//        
-//        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-//        kmf.init(ks, keyStorePassword);
         SSLContext sslcontext = SSLContext.getInstance("TLS");
-//        sslcontext.init(kmf.getKeyManagers(), trustAllCerts, null);
         sslcontext.init(null, trustAllCerts, null);
 
         SSLSocketFactory ssf = sslcontext.getSocketFactory();
         SSLSocket s = (SSLSocket) ssf.createSocket("192.168.0.10", 1234);
         s.startHandshake();
 
-        /**
-         * *********************************
-         */
-//        SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
-//        Socket s = ssf.createSocket("127.0.0.1", 1234);
-        //Socket s = new Socket("localhost", 1234);
         InputStream is = s.getInputStream();
         OutputStream os = s.getOutputStream();
         os.write("hello".getBytes());
